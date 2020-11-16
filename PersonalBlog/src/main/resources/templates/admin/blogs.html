@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>博客管理</title>
+    <!-- 移动端缩放设置 -->
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- semantic UI -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <!--自定义css-->
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+
+<body>
+
+<!-- 导航 -->
+<!--inverted反转，加了就是黑的;attached 依附，加了导航栏就没有圆角了，贴边;m-padding-tb-mini在自定义css中，缩小导航栏上下空黑的距离-->
+<nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padding-tb-mini m-shadow-small">
+    <!--ui container让其位置不再顶格-->
+    <div class="ui container">
+        <!--secondary使得字体颜色变化; stackable使得屏幕小的时候会堆叠-->
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">管理后台</h2>
+            <!--icon可以去ui文档查-->
+            <a href="#" class="active m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="m-item right menu m-mobile-hide">
+                <div class="ui dropdown item ">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://picsum.photos/id/1019/100/100">
+                        CH
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加一个图标，使得在移动端可以通过其来展开 -->
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!-- pointing加了个∠ -->
+<div class="ui attached pointing menu">
+    <!-- 使其不顶格 -->
+    <div class="ui container">
+        <div class="right menu">
+            <a href="" th:href="@{/admin/blogs/input}" class="item">发布</a>
+            <a href="" th:href="@{/admin/blogs}" class="teal active item">列表</a>
+        </div>
+    </div>
+</div>
+
+<!-- 中间内容 -->
+<div class="m-container-small m-padding-tb-big">
+    <div class="ui container">
+        <div class="ui secondary form segment">
+            <div class="inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题">
+                </div>
+                <div class="field">
+                    <div class="ui labeled action input">
+                        <div class="ui type selection dropdown">
+                            <input type="hidden" name="typeId">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">分类</div>
+                            <div class="menu">
+                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}"
+                                     th:text="${type.name}">错误日志
+                                </div>
+                            </div>
+                        </div>
+                        <button id="clear-btn" class="ui compact button">clear</button>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="recommend" name="recommend">
+                        <label for="recommend">推荐</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <button type="button" id="search-btn" class="ui teal basic button">
+                        <i class="search icon"></i>
+                        搜索
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="table-container">
+            <!-- celled给表格加线条 -->
+            <table th:fragment="blogList" class="ui compact teal table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>标题</th>
+                    <th>类型</th>
+                    <th>推荐</th>
+                    <th>状态</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--               从page对象里的content属性里获取所有blog-->
+                <tr th:each="blog,iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${blog.title}">刻意联系清单</td>
+                    <td th:text="${blog.type.name}">认知升级</td>
+                    <td th:text="${blog.recommend} ? '是' : '否'">是</td>
+                    <td th:text="${blog.published} ? '发布' : '草稿'">草稿</td>
+                    <td th:text="${blog.updateTime}">2020年10月22日15:10:36</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}"
+                           class="ui mini teal basic button">编辑</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}"
+                           class="ui mini red basic button">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="7">
+                        <div class="ui mini floated pagination menu" th:if="${page.totalPages}>1">
+                            <!-- 动态处理form表单中的page的值，再去提交表单去请求数据  data-page是h5里面自定义数据域的一种方法  任何属性都可以通过th:attr来自定义 失败了·只能抄着tags和types来了·有空学习-->
+                            <a onclick="page(this)" th:name="page" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">上一页</a>
+                            <a onclick="page(this)" th:name="page" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">下一页</a>
+                        </div>
+                        <a href="" th:href="@{/admin/blogs/input}"
+                           class="ui right floated mini teal basic button">新增</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <i class="close icon"></i>
+                <div class="header">提示：</div>
+                <p th:text="${message}">恭喜，操作成功</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 底部footer -->
+<!--vertical垂直的，去除圆角；m-padding-tb-massive在自定义css中，放大间隔-->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padding-tb-massive">
+
+    <!--居中-->
+    <div class="ui center aligned container">
+        <!--做一个容器，布局，分成16份，bootstrap会分成12份；按3 3 3 7布局;inverted divided,白线分割-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <!--圆角图片-->
+                        <img src="../../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 100px">
+                    </div>
+                </div>
+
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email: 1650751586@qq.com</a>
+                    <a href="#" class="item">qq: 1650751586</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced ">Bolg</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是个人博客，分享，，帮助，，。。。。。。。凑字数</p>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="ui inverted sction divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2020 版权所有，虽然我是抄的</p>
+    </div>
+</footer>
+
+
+<th:block th:replace="admin/_fragments :: script">
+    <!-- jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <!-- semantic UI -->
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</th:block>
+<!-- 得放在jquery下面 -->
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+
+    });
+    $('.ui.dropdown').dropdown();
+
+    //消息提示关闭初始化
+    $('.message .close')
+        .on('click', function () {
+            $(this).closest('.message').transition('fade');
+        });
+
+    $('#clear-btn')
+        .on('click',function () {
+            $('.ui.type.dropdown').dropdown('clear');
+        });
+
+    function page(obj) {
+        $("[name='page']").val($(obj).data("page"));
+        loaddata();
+    }
+
+    $("#search-btn").click(function () {
+        $("[name='page']").val(0);
+        loaddata();
+    });
+
+    //就不能用form submit提交了，要用jQuery和Ajax去请求,下面这个注释的写法是thymeleaf里面的写法，表示请求的地址，里面的值就是form表单的值
+    function loaddata() {
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
+            title: $("[name='title']").val(),
+            typeId: $("[name='typeId']").val(),
+            recommend: $("[name='recommend']").prop('checked'),
+            page: $("[name='page']").val()
+        });
+    }
+
+
+</script>
+
+<!--板娘-->
+<script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+<script>
+    L2Dwidget.init({
+        "model": {
+            jsonPath: "https://unpkg.com/live2d-widget-model-hijiki/assets/hijiki.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "left",
+            "width": 200,
+            "height": 400,
+            "hOffset": -17,
+            "vOffset": -10
+        },
+        "mobile": {
+            "show": true,
+            "scale": 0.5
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.3
+        }
+    });
+</script>
+</body>
+
+</html>

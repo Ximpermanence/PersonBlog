@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>标签新增</title>
+    <!-- 移动端缩放设置 -->
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- semantic UI -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <!--自定义css-->
+    <link rel="stylesheet" href="../../static/css/me.css">
+    <!-- markdown插件集成所需css -->
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+</head>
+
+<body>
+
+<!-- 导航 -->
+<!--inverted反转，加了就是黑的;attached 依附，加了导航栏就没有圆角了，贴边;m-padding-tb-mini在自定义css中，缩小导航栏上下空黑的距离-->
+<nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padding-tb-mini m-shadow-small">
+    <!--ui container让其位置不再顶格-->
+    <div class="ui container">
+        <!--secondary使得字体颜色变化; stackable使得屏幕小的时候会堆叠-->
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">管理后台</h2>
+            <!--icon可以去ui文档查-->
+            <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="active m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class=" m-item right menu m-mobile-hide">
+                <div class="ui dropdown item ">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://picsum.photos/id/1019/100/100">
+                        CH
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加一个图标，使得在移动端可以通过其来展开 -->
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!-- pointing加了个∠ -->
+<div class="ui attached pointing menu">
+    <!-- 使其不顶格 -->
+    <div class="ui container">
+        <div class="right menu">
+            <a href="" th:href="@{/admin/tags/input}" class="teal active item">新增</a>
+            <a href="" th:href="@{/admin/tags}" class=" item">列表</a>
+        </div>
+    </div>
+</div>
+
+<!-- 中间内容 -->
+<div class="m-container-small m-padding-tb-big">
+    <div class="ui container">
+        <form action="#" method="POST" th:object="${tag}" th:action="*{id}==null ? @{/admin/tags} : @{/admin/tags/{id}(id=*{id})} " class="ui form">
+            <input type="hidden" name="id" th:value="*{id}">
+            <div class=" field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">名称</label>
+<!--                    *可以理解为上面这个object这个tag所属的东西-->
+                    <input type="text" name="name" placeholder="标签名称" th:value="*{name}">
+                </div>
+            </div>
+
+            <div class="ui error message"></div>
+<!--            这个符号，让静态页面无效，但是thyemleaf运行时还是可以载入，if使有错误的话才显示-->
+           <!--/*/
+                <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+                <i class="close icon"></i>
+                <div class="header">验证失败</div>
+                <p th:errors="*{name}">提交信息不符合规则</p>
+            </div>
+            /*/-->
+
+            <div class="ui right aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                <button class="ui teal submit button">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 底部footer -->
+<!--vertical垂直的，去除圆角；m-padding-tb-massive在自定义css中，放大间隔-->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padding-tb-massive">
+    <!--居中-->
+    <div class="ui center aligned container">
+        <!--做一个容器，布局，分成16份，bootstrap会分成12份；按3 3 3 7布局;inverted divided,白线分割-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <!--圆角图片-->
+                        <img src="../../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 100px">
+                    </div>
+                </div>
+
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email: 1650751586@qq.com</a>
+                    <a href="#" class="item">qq: 1650751586</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced ">Bolg</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是个人博客，分享，，帮助，，。。。。。。。凑字数</p>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="ui inverted sction divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2020 版权所有，虽然我是抄的</p>
+    </div>
+</footer>
+
+<th:block th:replace="admin/_fragments :: script">
+    <!-- jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <!-- semantic UI -->
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <!-- markdown集成所需js -->
+    <script src="../../static/lib/editormd/editormd.min.js"></script>
+</th:block>
+<!-- 得放在jquery下面 -->
+<script>
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+
+    });
+    $('.ui.dropdown').dropdown();
+    $('.ui.form').form({
+        fields: {
+            title: {
+                identifier: 'name',
+                // 验证规则，非空，prompt为提示内容
+                rules: [{
+                    type: 'empty',
+                    prompt: '标题：请输入标签名称'
+
+                }]
+            }
+        }
+    });
+
+</script>
+</body>
+
+</html>

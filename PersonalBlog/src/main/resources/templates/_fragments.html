@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title th:replace="${title}">博客详情</title>
+    <!-- 移动端缩放设置 -->
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- semantic UI -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <!-- 内容排版插件 -->
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <!-- animate -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- prism代码高亮 -->
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <!--自定义css-->
+    <link rel="stylesheet" href="../static/css/me.css " th:href="@{/css/me.css}">
+    <!-- tocbot生成目录 -->
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+</head>
+<body>
+
+<!-- 导航 -->
+<!--inverted反转，加了就是黑的;attached 依附，加了导航栏就没有圆角了，贴边;m-padding-tb-mini在自定义css中，缩小导航栏上下空黑的距离-->
+<nav th:fragment="menu(n)"  class="ui inverted attached segment m-padding-tb-mini m-shadow-small">
+    <!--ui container让其位置不再顶格-->
+    <div class="ui container">
+        <!--secondary使得字体颜色变化; stackable使得屏幕小的时候会堆叠-->
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">Blog</h2>
+            <!--icon可以去ui文档查-->
+            <a href="#" th:href="@{/}" class="m-item item m-mobile-hide " th:classappend="${n==1} ? 'active'" ><i class="home icon"></i><span>首页</span></a>
+            <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'" ><i class="idea icon"></i>分类</a>
+            <a href="#" th:href="@{/tags/-1}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'" ><i class="tags icon"></i>标签</a>
+            <a href="#" th:href="@{/archives}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'" ><i class="clone icon"></i>归档</a>
+            <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'" ><i class="info icon"></i>关于我</a>
+            <div class="right m-item item m-mobile-hide ">
+                <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
+                    <div  class="ui icon inverted transparent input background-change">
+<!--                        因为是input，所以用th:value,像span,div这样的用th:text-->
+                        <input type="text" name="query" placeholder="搜索" th:value="${query}">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 加一个图标，使得在移动端可以通过其来展开 -->
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+
+<!-- 底部footer -->
+<!--vertical垂直的，去除圆角；m-padding-tb-massive在自定义css中，放大间隔-->
+<footer th:fragment="footer" class="ui inverted vertical segment m-padding-tb-massive">
+    <!--居中-->
+    <div class="ui center aligned container">
+        <!--做一个容器，布局，分成16份，bootstrap会分成12份；按3 3 3 7布局;inverted divided,白线分割-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <!--圆角图片-->
+                        <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui rounded image" alt="" style="width: 100px">
+                    </div>
+                </div>
+
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+
+                <div id="newblog-container">
+                    <div class="ui inverted link list" th:fragment="newblogList">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item" th:text="#{index.email}">Email: 1650751586@qq.com</a>
+                    <a href="#" class="item">qq: 1650751586</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced ">Bolg</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是个人博客，分享，，帮助，，。。。。。。。凑字数</p>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="ui inverted sction divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2020 版权所有，虽然我是抄的</p>
+    </div>
+</footer>
+
+<th:block th:fragment="script">
+
+    <!-- jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <!-- semantic UI -->
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <!-- prism代码高亮 -->
+    <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+    <!-- tocbot -->
+    <script src="../static/lib/tocbot/tocbot.js" th:src="@{/lib/tocbot/tocbot.js}"></script>
+    <!-- qrcode -->
+    <script src="../static/lib/qrcode/qrcode.js" th:src="@{/lib/qrcode/qrcode.js}"></script>
+    <!-- 平滑滚动 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<!--    导航栏下的最新博客-->
+    <script>
+        $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+    </script>
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title th:replace="${title}">博客详情</title>
+    <!-- 移动端缩放设置 -->
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- semantic UI -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <!-- 内容排版插件 -->
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <!-- animate -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- prism代码高亮 -->
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <!-- markdown插件集成所需css -->
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+    <!-- tocbot生成目录 -->
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <!--自定义css-->
+    <link rel="stylesheet" href="../static/css/me.css " th:href="@{/css/me.css}">
+
+</head>
+<body>
+
+<!-- 导航 -->
+<!--inverted反转，加了就是黑的;attached 依附，加了导航栏就没有圆角了，贴边;m-padding-tb-mini在自定义css中，缩小导航栏上下空黑的距离-->
+<nav th:fragment="menu(n)"  class="ui inverted attached segment m-padding-tb-mini m-shadow-small">
+    <!--ui container让其位置不再顶格-->
+    <div class="ui container">
+        <!--secondary使得字体颜色变化; stackable使得屏幕小的时候会堆叠-->
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">管理后台</h2>
+            <!--icon可以去ui文档查-->
+            <a href="#" th:href="@{/admin/blogs}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>博客</a>
+            <a href="#" th:href="@{/admin/types}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="idea icon"></i>分类</a>
+            <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
+            <a href="#" th:href="@{/admin/comments}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="tags icon"></i>评论</a>
+            <div class="m-item right menu m-mobile-hide">
+                <div class="ui dropdown item ">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://picsum.photos/id/1019/100/100" th:src="@{${session.user.avatar}}">
+                        <span th:text="@{${session.user.nickname}}">CH</span>
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加一个图标，使得在移动端可以通过其来展开 -->
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+
+<!-- 底部footer -->
+<!--vertical垂直的，去除圆角；m-padding-tb-massive在自定义css中，放大间隔-->
+<footer th:fragment="footer" class="ui inverted vertical segment m-padding-tb-massive">
+    <!--居中-->
+    <div class="ui center aligned container">
+        <!--做一个容器，布局，分成16份，bootstrap会分成12份；按3 3 3 7布局;inverted divided,白线分割-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <!--圆角图片-->
+                        <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui rounded image" alt="" style="width: 100px">
+                    </div>
+                </div>
+
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email: 1650751586@qq.com</a>
+                    <a href="#" class="item">qq: 1650751586</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced ">Bolg</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是个人博客，分享，，帮助，，。。。。。。。凑字数</p>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="ui inverted sction divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2020 版权所有，虽然我是抄的</p>
+    </div>
+</footer>
+
+<th:block th:fragment="script">
+
+    <!-- jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <!-- semantic UI -->
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <!-- markdown集成所需js -->
+    <script src="../../static/lib/editormd/editormd.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+
+<!--    下面的可以先拿掉避免资源浪费-->
+    <!--    &lt;!&ndash; prism代码高亮 &ndash;&gt;-->
+<!--    <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>-->
+<!--    &lt;!&ndash; tocbot &ndash;&gt;-->
+<!--    <script src="../static/lib/tocbot/tocbot.js" th:src="@{/lib/tocbot/tocbot.js}"></script>-->
+<!--    &lt;!&ndash; qrcode &ndash;&gt;-->
+<!--    <script src="../static/lib/qrcode/qrcode.js" th:src="@{/lib/qrcode/qrcode.js}"></script>-->
+<!--    &lt;!&ndash; 平滑滚动 &ndash;&gt;-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>-->
+<!--    <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>-->
+</th:block>
+
+</body>
+</html>

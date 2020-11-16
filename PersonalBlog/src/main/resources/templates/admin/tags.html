@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>标签管理</title>
+    <!-- 移动端缩放设置 -->
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- semantic UI -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <!--自定义css-->
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+
+<body>
+
+<!-- 导航 -->
+<!--inverted反转，加了就是黑的;attached 依附，加了导航栏就没有圆角了，贴边;m-padding-tb-mini在自定义css中，缩小导航栏上下空黑的距离-->
+<nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padding-tb-mini m-shadow-small">
+    <!--ui container让其位置不再顶格-->
+    <div class="ui container">
+        <!--secondary使得字体颜色变化; stackable使得屏幕小的时候会堆叠-->
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">管理后台</h2>
+            <!--icon可以去ui文档查-->
+            <a href="#" class=" m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+            <a href="#" class=" m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="active m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class=" m-item right menu m-mobile-hide">
+                <div class="ui dropdown item ">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://picsum.photos/id/1019/100/100">
+                        CH
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加一个图标，使得在移动端可以通过其来展开 -->
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!-- pointing加了个∠ -->
+<div class="ui attached pointing menu">
+    <!-- 使其不顶格 -->
+    <div class="ui container">
+        <div class="right menu">
+            <a href="" th:href="@{/admin/tags/input}" class="item">新增</a>
+            <a href="" th:href="@{/admin/tags}" class="teal active item">列表</a>
+        </div>
+    </div>
+</div>
+
+<!-- 中间内容 -->
+<div class="m-container-small m-padding-tb-big">
+    <div class="ui container">
+
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${message}">操作成功</p>
+        </div>
+        <div class="ui error message" th:unless="${#strings.isEmpty(error)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${error}">操作成功</p>
+        </div>
+        <!-- celled给表格加线条 -->
+        <table class="ui compact teal table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--               用循环的方式从page对象里的content属性里获取内容，将tag填充到下面-->
+            <tr th:each="tag,iterState : ${page.content}">
+                <td th:text="${iterState.count}">1</td>
+                <td th:text="${tag.name}">刻意联系清单</td>
+                <td>
+                    <a href="#" th:href="@{/admin/tags/{id}/input(id=${tag.id})}"
+                       class="ui mini teal basic button">编辑</a>
+                    <a href="#" th:href="@{/admin/tags/{id}/delete(id=${tag.id})}"
+                       class="ui mini red basic button">删除</a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui mini floated pagination menu" th:if="${page.totalPages}>1">
+                        <!--                            条件返回false,a标签不显示-->
+                        <a th:href="@{/admin/tags(page=${page.number}-1)}" class="item"
+                           th:unless="${page.first}">上一页</a>
+                        <a th:href="@{/admin/tags(page=${page.number}+1)}" class="item"
+                           th:unless="${page.last}">下一页</a>
+                    </div>
+                    <!--                           和编辑一样，不过不用传id-->
+                    <a href="" th:href="@{/admin/tags/input}" class="ui right floated mini teal basic button">新增</a>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<!-- 底部footer -->
+<!--vertical垂直的，去除圆角；m-padding-tb-massive在自定义css中，放大间隔-->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padding-tb-massive">
+
+    <!--居中-->
+    <div class="ui center aligned container">
+        <!--做一个容器，布局，分成16份，bootstrap会分成12份；按3 3 3 7布局;inverted divided,白线分割-->
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <!--圆角图片-->
+                        <img src="../../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 100px">
+                    </div>
+                </div>
+
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email: 1650751586@qq.com</a>
+                    <a href="#" class="item">qq: 1650751586</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced ">Bolg</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是个人博客，分享，，帮助，，。。。。。。。凑字数</p>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="ui inverted sction divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2020 版权所有，虽然我是抄的</p>
+    </div>
+</footer>
+
+
+<th:block th:replace="admin/_fragments :: script">
+    <!-- jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <!-- semantic UI -->
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</th:block>
+<!-- 得放在jquery下面 -->
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+
+    });
+    $('.ui.dropdown').dropdown();
+
+    //消息提示关闭初始化
+    $('.message .close')
+        .on('click',function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+</script>
+</body>
+
+</html>

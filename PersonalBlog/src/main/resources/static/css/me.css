@@ -1,0 +1,211 @@
+
+/*body {*/
+/*    background: url("../images/interlaced.png") top center no-repeat ;*/
+/*    background-size:cover;*/
+/*}*/
+
+/*body*/
+/*{*/
+/*    background:url("../images/interlaced.png");*/
+/*    background-attachment:fixed;*/
+/*    background-repeat:no-repeat;*/
+/*    background-size:cover;*/
+/*    -moz-background-size:cover;*/
+/*    -webkit-background-size:cover;*/
+/*}*/
+
+html,body{
+    background-image: url("../images/interlaced.png") !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    /*min-width:100%;*/
+    /*min-height: 100%;*/
+    margin:0 !important; padding:0 !important;
+    height: 100% !important;
+}
+
+.m-padding-mini{
+    /* 提高级别，否则会被覆盖 */
+    padding: 0.2em !important;
+}
+.m-padding-tiny{
+    padding: 0.3em !important;
+}
+.m-padding{
+    padding: 1em !important;
+}
+.m-padding-tb-mini{
+    padding-top: 0.2em !important;
+    padding-bottom: 0.2em !important;
+}
+.m-padding-tb-tiny{
+    padding-top: 0.3em !important ;
+    padding-bottom: 0.3em !important ;
+}
+.m-padding-tb-small{
+    padding-top: 0.5em !important ;
+    padding-bottom: 0.5em !important ;
+}
+.m-padding-tb{
+    padding-top: 1em !important ;
+    padding-bottom: 1em !important ;
+}
+.m-padding-tb-large{
+    padding-top: 2em !important ;
+    padding-bottom: 2em !important ;
+}
+.m-padding-tb-big{
+    padding-top: 3em !important ;
+    padding-bottom: 3em !important ;
+}
+.m-padding-tb-huge{
+    padding-top: 4em !important ;
+    padding-bottom: 4em !important ;
+}
+.m-padding-tb-massive{
+    padding-top: 5em !important ;
+    padding-bottom: 5em !important ;
+}
+
+.m-padding-lr-responsive{
+    padding-left: 4em !important; 
+    padding-right: 4em !important;    
+}
+
+
+/*————————————text——————————————————*/
+
+.m-text{
+    font-weight: 300 !important;
+    letter-spacing: 1px !important;
+    line-height: 1.8;
+}
+.m-text-thin{
+    font-weight: 300 !important;
+}
+/* 字间距 */
+.m-text-spaced{
+    letter-spacing: 1px !important;
+}
+/* 行间距 */
+.m-text-line{
+    line-height: 1.8;
+}
+
+/* -------------opacity------------- */
+/* 透明度 */
+.m-opacity-mini{
+    opacity: 0.8 !important;
+}
+
+.m-opacity-tiny{
+    opacity: 0.8 !important;
+}
+
+
+/* -------------position---------------- */
+.m-right-top{
+    position:absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+}
+
+.m-fixed{
+    position: fixed !important;
+    z-index: 1;
+}
+.m-right-bottom{
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+
+/*----------------- margin--------------- */
+.m-margin-top-small{
+    margin-top: 0.5em !important;
+}
+
+.m-margin-top{
+    margin-top: 1em !important;
+}
+
+.m-margin-top-large{
+    margin-top: 2em !important;
+}
+
+.m-margin-tb-tiny{
+    margin-top:0.3em !important;
+    margin-bottom:0.3em !important;
+}
+
+.m-margin-bottom-small{
+    margin-bottom: 0.5em !important;
+}
+
+
+/* ------------display------------------ */
+.m-inline-block{
+    display: inline-block !important;
+}
+
+/*-------------- container ----------*/
+.m-container{
+    max-width: 72em !important;
+    /* 使其水平端居中 */
+    margin: auto !important;
+}
+.m-container-small{
+    max-width:60em !important;
+    margin: auto !important;
+}
+
+/* -------------shadow---------- */
+.m-shadow-small{
+    -webkit-box-shadow:0 4px 8px rgba(0, 0, 0, 2) !important;
+    box-shadow:0 4px 8px rgba(0, 0, 0, 2) !important;
+}
+
+/* -----------color------------ */
+.m-black{
+    color: #333 !important;
+}
+
+.m-teal{
+    color: #00B5AD !important;
+}
+
+/*需要摆在上面才起效*/
+.m-mobile-show{
+    display: none !important;
+}
+
+/*小于768像素，小屏幕的时候*/
+@media screen and ( max-width:768px){
+    .m-mobile-hide {
+        display: none !important;
+    }
+    .m-mobile-show{
+        display: block !important;
+    }
+
+    .m-padding-lr-responsive{
+        padding-left: 0em !important; 
+        padding-right: 0em !important;    
+    }
+
+    .m-mobile-lr-clear{
+        padding-left: 0em !important; 
+        padding-right: 0em !important;    
+    }
+    .m-mobile-wide {
+        width: 100% !important;
+    }
+   
+}
+
+/*下拉菜单填充*/
+/*.background-change{*/
+    /*box-shadow: 0 0 0px 1000px #00ff00 inset !important;*/
+    /*background-color: red;*/
+/*}*/
