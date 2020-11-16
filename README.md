@@ -1,4 +1,4 @@
-# Springboot+Semantic UI开发个人博客
+# Springboot+Semantic UI开发个人博客（抄自https://www.bilibili.com/video/BV1PE411f7gS/?p=8）
 
 ## 1、需求与功能
 
