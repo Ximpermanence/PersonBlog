@@ -53,7 +53,7 @@
 
 ### 1.2、功能规划
 
-![image-20201019100918121](../READMEimage/image-20201019100918121.png)
+![image-20201019100918121](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201019100918121.png)
 
 ## 2、页面设计与开发
 
@@ -85,7 +85,7 @@ https://fontawesome.com/?from=io%2Ficons
 
 ### 2.3、插件集成
 
-![image-20201022164126750](../READMEimage/image-20201022164126750.png)
+![image-20201022164126750](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201022164126750.png)
 
 markdown编辑器：https://pandao.github.io/editor.md
 
@@ -365,27 +365,27 @@ public class LogAspect {
 - 博客评论Comment
 - 用户User
 
-![image-20201026161237418](../READMEimage/image-20201026161237418.png)
+![image-20201026161237418](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201026161237418.png)
 
-![image-20201026161411716](../READMEimage/image-20201026161411716.png)
+![image-20201026161411716](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201026161411716.png)
 
-![image-20201026161645532](../READMEimage/image-20201026161645532.png)
+![image-20201026161645532](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201026161645532.png)
 
-![image-20201026161900605](../READMEimage/image-20201026161900605.png)
+![image-20201026161900605](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201026161900605.png)
 
-![image-20201026161911352](../READMEimage/image-20201026161911352.png)
+![image-20201026161911352](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201026161911352.png)
 
-![image-20201026161917916](../READMEimage/image-20201026161917916.png)
+![image-20201026161917916](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201026161917916.png)
 
 
 
-![image-20201026161938751](../READMEimage/image-20201026161938751.png)![image-20201026161942470](../READMEimage/image-20201026161942470.png)
+![image-20201026161938751](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201026161938751.png)![image-20201026161942470](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201026161942470.png)
 
 
 
 ### 4.2应用分层
 
-![image-20201026162026082](../READMEimage/image-20201026162026082.png)
+![image-20201026162026082](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201026162026082.png)
 
 ### 4.3命名约定
 
@@ -530,7 +530,7 @@ Service/DAO层命名约定:
 
 - 依赖：
 
-![image-20201102101546474](../READMEimage/image-20201102101546474.png)
+![image-20201102101546474](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201102101546474.png)
 
 2、
 
@@ -562,13 +562,13 @@ Service/DAO层命名约定:
 
 搜索通过下拉框选择时，样式改变
 
-![image-20201030175353607](../READMEimage/image-20201030175353607.png)
+![image-20201030175353607](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201030175353607.png)
 
 
 
 可以在该位置添加一个评论控制功能
 
-![image-20201103151326317](../READMEimage/image-20201103151326317.png)
+![image-20201103151326317](https://github.com/Ximpermanence/PersonBlog/blob/main/READMEimage/image-20201103151326317.png)
 
 
 
