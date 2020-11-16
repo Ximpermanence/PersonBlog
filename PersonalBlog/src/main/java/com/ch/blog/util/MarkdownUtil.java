@@ -81,6 +81,10 @@ public class MarkdownUtil {
         }
     }
 
+    /**
+     * markdownUtiltest
+     * @param args
+     */
     public static void main(String[] args){
         String table="## 6、前端展示\n" +
                 "\n" +
